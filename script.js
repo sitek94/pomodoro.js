@@ -1,54 +1,72 @@
 const isProd = false
 
+// DOM
 const timerNode = document.querySelector("#timer")
 const startBtn = document.querySelector("#start")
 const stopBtn = document.querySelector("#stop")
 const resetBtn = document.querySelector("#reset")
 
 const INTERVAL = isProd ? 1000 : 0.001
+const INITIAL_TIME = 25 * 60
+// Opportunity to read from local storage later on
+const INITIAL_COMPLETED_PHASES = 0
 
-let initialTime = 25 * 60
-let timeLeft = initialTime
-let state = "stopped"
+// ENUMS
+const State = {
+  Stopped: "stopped",
+  Running: "running",
+}
+const Phase = {
+  Work: "work",
+  Break: "break",
+}
 
+// STATE
+let timeLeft = INITIAL_TIME
+let currentState = State.Stopped
+let currentPhase = Phase.Work
+let completedPhases = INITIAL_COMPLETED_PHASES
+
+let timeoutId = null
+
+// Attach event handlers
 startBtn.addEventListener("click", onStart)
 stopBtn.addEventListener("click", onStop)
 resetBtn.addEventListener("click", onReset)
 
-let timeoutId = null
-
 function onStart() {
-  if (state === "running") {
+  if (currentState === State.Running) {
     return
   }
-  state = "running"
+  currentState = State.Running
   tick()
 }
 
 function stopTimer() {
-  state = "stopped"
+  currentState = State.Stopped
   clearTimeout(timeoutId)
 }
 
 function onStop() {
-  if (state === "stopped") {
+  if (currentState === State.Stopped) {
     return
   }
   stopTimer()
 }
 
 function onReset() {
-  state = "stopped"
+  currentState = State.Stopped
   clearTimeout(timeoutId)
-  timeLeft = initialTime
-  updateTimer(initialTime)
+  timeLeft = INITIAL_TIME
+  updateTimer(INITIAL_TIME)
 }
 
 function tick() {
   if (timeLeft === 0) {
+    completedPhases++
     return stopTimer()
   }
-  if (state === "running") {
+  if (currentState === State.Running) {
     timeoutId = setTimeout(() => {
       timeLeft--
       updateTimer(timeLeft)
