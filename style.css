@@ -1,23 +1,37 @@
+:root {
+  --foreground: #fff;
+  --foreground-rgb: 255, 255, 255;
+  --background: #1d1d1d;
+  --background-rgb: 29, 29, 29;
+}
+
 html {
   max-width: 70ch;
   padding: 3em 1em;
   margin: auto;
   line-height: 1.75;
-  font-size: 1.25em;
-  background: #1d1d1d;
-  color: #fff;
+  font-size: 1.25rem;
+  background: var(--background);
+  color: var(--foreground);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 3em 0 1em;
+.timer {
+  font-size: 4rem;
+  margin-bottom: 0;
 }
 
-p {
-  margin-bottom: 2em;
-  font-family: sans-serif;
+button {
+  color: var(--foreground);
+  border: 1px solid var(--foreground);
+  background: transparent;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: serif;
+}
+
+button:hover,
+button:focus {
+  outline: none;
+  background: rgba(var(--foreground-rgb), 0.1);
 }
