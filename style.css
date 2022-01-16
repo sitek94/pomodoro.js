@@ -35,3 +35,8 @@ button:focus {
   outline: none;
   background: rgba(var(--foreground-rgb), 0.1);
 }
+
+.between-session-screen .title {
+  font-size: 2rem;
+  margin-bottom: 0;
+}
