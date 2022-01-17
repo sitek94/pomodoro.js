@@ -1,4 +1,9 @@
 :root {
+  --white: #fff;
+  --white-rgb: 255, 255, 255;
+  --dark: #1d1d1d;
+  --dark-rgb: 29, 29, 29;
+
   --foreground: #fff;
   --foreground-rgb: 255, 255, 255;
   --background: #1d1d1d;
@@ -15,28 +20,24 @@ html {
   color: var(--foreground);
 }
 
-.timer {
+.display {
   font-size: 4rem;
   margin-bottom: 0;
 }
 
 button {
   color: var(--foreground);
-  border: 1px solid var(--foreground);
   background: transparent;
+  border: 1px solid var(--foreground);
   padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
   font-size: 1rem;
-  cursor: pointer;
   font-family: serif;
+  cursor: pointer;
 }
 
 button:hover,
 button:focus {
   outline: none;
   background: rgba(var(--foreground-rgb), 0.1);
-}
-
-.between-session-screen .title {
-  font-size: 2rem;
-  margin-bottom: 0;
 }
