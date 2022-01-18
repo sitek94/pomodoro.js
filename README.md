@@ -1,5 +1,11 @@
 # pomodoro.js
 
+## Idea
+
+The idea of this project is to first create a fast and dirty Pomodoro timer, just so that it works.
+Then write tests to ensure that the timer works as expected. Finally, refactor the code having confidence
+that everything's fine thanks to the tests.
+
 ## Resources
 
 - [Running a global test setup before each test in Jest](https://stackoverflow.com/questions/48722930/running-a-global-test-setup-before-each-test-in-jest)
