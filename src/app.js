@@ -1,10 +1,11 @@
-export const createApp = (props, root) => {
+export const createApp = props => {
   const { workTime, interval } = props
 
   let timeLeft = workTime
   let phase = "idle"
   let timeoutId = null
 
+  const root = document.createElement("div")
   root.innerHTML = `
     <div id="timer-view">
       <div id="timer" class="display">${timeLeft}</div>
@@ -59,4 +60,6 @@ export const createApp = (props, root) => {
     const button = timerView.querySelector(selector)
     button.addEventListener("click", handler)
   }
+
+  return root
 }
