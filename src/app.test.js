@@ -11,4 +11,10 @@ describe("App", () => {
     getByRole(container, "button", { name: "stop" })
     getByRole(container, "button", { name: "reset" })
   })
+
+  it.todo("starts timer when start button is clicked")
+  it.todo("stops timer when stop button is clicked")
+  it.todo("resets timer when reset button is clicked")
+  it.todo("updates timer when interval is changed")
+  it.todo("should show 0 when timer has finished")
 })
