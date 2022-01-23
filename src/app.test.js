@@ -99,6 +99,16 @@ describe("App", () => {
 
     expect(onEnd).toHaveBeenCalled()
   })
+
+  it('should start the timer automatically, when "startTimerOnRender" prop is passed', () => {
+    const { getByText } = render(
+      createApp({ timeLeft: 300, interval: 1, startTimerOnRender: true })
+    )
+
+    jest.runAllTimers()
+
+    expect(getByText("0")).toBeInTheDocument()
+  })
 })
 
 /**

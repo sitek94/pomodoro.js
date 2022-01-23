@@ -1,5 +1,10 @@
 export const createApp = props => {
-  const { timeLeft: initialTimeLeft, interval, onEnd = () => {} } = props
+  const {
+    timeLeft: initialTimeLeft,
+    interval,
+    onEnd = () => {},
+    startTimerOnRender = false,
+  } = props
 
   let timeLeft = initialTimeLeft
   let phase = "idle"
@@ -14,8 +19,13 @@ export const createApp = props => {
       <button id="reset-btn">reset</button>
     </div>
   `
+
   const timerView = root.querySelector("#timer-view")
   const timer = timerView.querySelector("#timer")
+
+  if (startTimerOnRender) {
+    startTimer()
+  }
 
   function tick() {
     timer.textContent = timeLeft
