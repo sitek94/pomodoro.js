@@ -47,7 +47,7 @@ export const createApp = props => {
     phase = "idle"
     clearTimeout(timeoutId)
 
-    timeLeft = workTime
+    timeLeft = initialTimeLeft
     timer.textContent = timeLeft
   }
 

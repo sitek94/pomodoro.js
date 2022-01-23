@@ -37,6 +37,8 @@ describe("App", () => {
 
     fireEvent.click(getByRole("button", { name: "stop" }))
 
+    expect(getByText("297")).toBeInTheDocument()
+
     // These ticks should be ignored, because the timer should be already stopped
     jest.advanceTimersToNextTimer()
     jest.advanceTimersToNextTimer()
@@ -45,9 +47,47 @@ describe("App", () => {
     expect(getByText("297")).toBeInTheDocument()
   })
 
-  it.todo("resets timer when reset button is clicked")
-  it.todo("updates timer when interval is changed")
-  it.todo("should show 0 when timer has finished")
+  it("resets timer when reset button is clicked", () => {
+    const { getByRole, getByText } = render(createApp({ timeLeft: 300, interval: 1 }))
+
+    fireEvent.click(getByRole("button", { name: "start" }))
+
+    // Advance the timer 3 times
+    jest.advanceTimersToNextTimer()
+    jest.advanceTimersToNextTimer()
+    jest.advanceTimersToNextTimer()
+
+    expect(getByText("297")).toBeInTheDocument()
+
+    fireEvent.click(getByRole("button", { name: "reset" }))
+
+    expect(getByText("300")).toBeInTheDocument()
+  })
+
+  it("updates timer when interval is changed", () => {
+    const { getByText, getByRole } = render(createApp({ timeLeft: 300, interval: 1 }))
+
+    fireEvent.click(getByRole("button", { name: "start" }))
+
+    jest.advanceTimersToNextTimer()
+    expect(getByText("299")).toBeInTheDocument()
+
+    jest.advanceTimersToNextTimer()
+    expect(getByText("298")).toBeInTheDocument()
+
+    jest.advanceTimersToNextTimer()
+    expect(getByText("297")).toBeInTheDocument()
+  })
+
+  it("should show 0 when timer has finished", () => {
+    const { getByText, getByRole } = render(createApp({ timeLeft: 300, interval: 1 }))
+
+    fireEvent.click(getByRole("button", { name: "start" }))
+
+    jest.runAllTimers()
+
+    expect(getByText("0")).toBeInTheDocument()
+  })
 
   it("calls onEnd handler when the timer ends", () => {
     const onEnd = jest.fn()
