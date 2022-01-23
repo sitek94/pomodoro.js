@@ -1,7 +1,7 @@
 export const createApp = props => {
-  const { workTime, interval } = props
+  const { timeLeft: initialTimeLeft, interval, onEnd } = props
 
-  let timeLeft = workTime
+  let timeLeft = initialTimeLeft
   let phase = "idle"
   let timeoutId = null
 
@@ -21,6 +21,7 @@ export const createApp = props => {
     timer.textContent = timeLeft
     if (timeLeft === 0) {
       clearTimeout(timeoutId)
+      onEnd()
     } else {
       timeoutId = setTimeout(() => {
         timeLeft--
