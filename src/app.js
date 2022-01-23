@@ -10,17 +10,15 @@ export const createApp = props => {
   let phase = "idle"
   let timeoutId = null
 
-  const root = document.createElement("div")
-  root.innerHTML = `
-    <div id="timer-view">
-      <div id="timer" class="display">${timeLeft}</div>
-      <button id="start-btn">start</button>
-      <button id="stop-btn">stop</button>
-      <button id="reset-btn">reset</button>
-    </div>
+  const timerView = document.createElement("div")
+  timerView.id = "timer-view"
+  timerView.innerHTML = `
+    <div id="timer" class="display">${timeLeft}</div>
+    <button id="start-btn">start</button>
+    <button id="stop-btn">stop</button>
+    <button id="reset-btn">reset</button>
   `
 
-  const timerView = root.querySelector("#timer-view")
   const timer = timerView.querySelector("#timer")
 
   if (startTimerOnRender) {
@@ -72,5 +70,5 @@ export const createApp = props => {
     button.addEventListener("click", handler)
   }
 
-  return root
+  return timerView
 }
