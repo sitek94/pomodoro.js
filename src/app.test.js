@@ -16,6 +16,39 @@ describe("App", () => {
     expect(getByRole("button", { name: "reset" })).toBeInTheDocument()
   })
 
+  it("starts timer when start button is clicked", () => {
+    const { getByText, getByRole } = render(createApp({ timeLeft: 300, interval: 1 }))
+
+    fireEvent.click(getByRole("button", { name: "start" }))
+
+    jest.advanceTimersToNextTimer()
+    expect(getByText("299")).toBeInTheDocument()
+  })
+
+  it("stops timer when stop button is clicked", () => {
+    const { getByText, getByRole } = render(createApp({ timeLeft: 300, interval: 1 }))
+
+    fireEvent.click(getByRole("button", { name: "start" }))
+
+    // Advance the timer 3 times
+    jest.advanceTimersToNextTimer()
+    jest.advanceTimersToNextTimer()
+    jest.advanceTimersToNextTimer()
+
+    fireEvent.click(getByRole("button", { name: "stop" }))
+
+    // These ticks should be ignored, because the timer should be already stopped
+    jest.advanceTimersToNextTimer()
+    jest.advanceTimersToNextTimer()
+    jest.advanceTimersToNextTimer()
+
+    expect(getByText("297")).toBeInTheDocument()
+  })
+
+  it.todo("resets timer when reset button is clicked")
+  it.todo("updates timer when interval is changed")
+  it.todo("should show 0 when timer has finished")
+
   it("calls onEnd handler when the timer ends", () => {
     const onEnd = jest.fn()
     const { getByRole } = render(createApp({ timeLeft: 300, interval: 1, onEnd }))
@@ -26,12 +59,6 @@ describe("App", () => {
 
     expect(onEnd).toHaveBeenCalled()
   })
-
-  it.todo("starts timer when start button is clicked")
-  it.todo("stops timer when stop button is clicked")
-  it.todo("resets timer when reset button is clicked")
-  it.todo("updates timer when interval is changed")
-  it.todo("should show 0 when timer has finished")
 })
 
 /**

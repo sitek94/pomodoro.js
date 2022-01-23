@@ -1,5 +1,5 @@
 export const createApp = props => {
-  const { timeLeft: initialTimeLeft, interval, onEnd } = props
+  const { timeLeft: initialTimeLeft, interval, onEnd = () => {} } = props
 
   let timeLeft = initialTimeLeft
   let phase = "idle"
