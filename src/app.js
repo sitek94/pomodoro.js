@@ -72,3 +72,17 @@ export const createApp = props => {
 
   return timerView
 }
+
+export function createMessageView({ message, buttonText, onClick }) {
+  const messageView = document.createElement("div")
+  messageView.id = "message-view"
+  messageView.innerHTML = `
+    <div id="message" class="display">${message}</div>
+    <button>${buttonText}</button>
+  `
+
+  const button = messageView.querySelector("button")
+  button.addEventListener("click", onClick)
+
+  return messageView
+}
