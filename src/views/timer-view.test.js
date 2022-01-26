@@ -21,7 +21,7 @@ const createTimerViewMock = props => {
   }
 }
 
-describe("createTimerView", () => {
+describe("Timer View", () => {
   it(`renders initial view with "time left" set to 300`, () => {
     const { view } = createTimerViewMock({
       timeLeft: 300,
