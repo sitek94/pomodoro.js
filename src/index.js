@@ -1,4 +1,5 @@
-import { createApp, createMessageView } from "./app.js"
+import { createApp } from "./app"
+import { createMessageView } from "./views/message-view"
 
 const props = {
   timeLeft: 5 * 60,
@@ -10,7 +11,7 @@ const app = createApp(props)
 const root = document.querySelector("#root")
 root.appendChild(app)
 
-const messageView = createMessageView({
+const { view: messageView } = createMessageView({
   message: "Hello World",
   buttonText: "continue",
   onClick: () => alert("clicked"),
