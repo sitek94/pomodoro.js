@@ -1,10 +1,11 @@
 import { TimerView } from "./timer-view"
+
 const INTERVAL = 1
 
 const RUNNING = "RUNNING"
 const IDLE = "IDLE"
 
-export function Timer({ timeLeft: initialTimeLeft }) {
+export function Timer({ timeLeft: initialTimeLeft, onEnd }) {
   let timeLeft = initialTimeLeft
   let timeoutId
   let phase = IDLE
@@ -20,7 +21,7 @@ export function Timer({ timeLeft: initialTimeLeft }) {
     view.setTimerText(timeLeft)
     if (timeLeft === 0) {
       clearTimeout(timeoutId)
-      // onEnd()
+      onEnd?.()
     } else {
       timeoutId = setTimeout(() => {
         timeLeft--

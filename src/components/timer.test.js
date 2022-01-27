@@ -1,4 +1,4 @@
-import { createApp } from "./app.js"
+import { Timer } from "./timer"
 import { getQueriesForElement, fireEvent } from "@testing-library/dom"
 import "@testing-library/jest-dom"
 
@@ -7,8 +7,8 @@ describe("App", () => {
     jest.useFakeTimers()
   })
 
-  it("should render timer (set to 300), start, stop and reset buttons", () => {
-    const { getByText, getByRole } = render(createApp({ timeLeft: 300, interval: 1 }))
+  it("should render timer with timeLeft set to 300, start, stop and reset buttons", () => {
+    const { getByText, getByRole } = render(Timer({ timeLeft: 300 }))
 
     expect(getByText("300")).toBeInTheDocument()
     expect(getByRole("button", { name: "start" })).toBeInTheDocument()
@@ -17,7 +17,7 @@ describe("App", () => {
   })
 
   it("starts timer when start button is clicked", () => {
-    const { getByText, getByRole } = render(createApp({ timeLeft: 300, interval: 1 }))
+    const { getByText, getByRole } = render(Timer({ timeLeft: 300 }))
 
     fireEvent.click(getByRole("button", { name: "start" }))
 
@@ -26,7 +26,7 @@ describe("App", () => {
   })
 
   it("stops timer when stop button is clicked", () => {
-    const { getByText, getByRole } = render(createApp({ timeLeft: 300, interval: 1 }))
+    const { getByText, getByRole } = render(Timer({ timeLeft: 300 }))
 
     fireEvent.click(getByRole("button", { name: "start" }))
 
@@ -48,7 +48,7 @@ describe("App", () => {
   })
 
   it("resets timer when reset button is clicked", () => {
-    const { getByRole, getByText } = render(createApp({ timeLeft: 300, interval: 1 }))
+    const { getByRole, getByText } = render(Timer({ timeLeft: 300 }))
 
     fireEvent.click(getByRole("button", { name: "start" }))
 
@@ -65,7 +65,7 @@ describe("App", () => {
   })
 
   it("updates timer when interval is changed", () => {
-    const { getByText, getByRole } = render(createApp({ timeLeft: 300, interval: 1 }))
+    const { getByText, getByRole } = render(Timer({ timeLeft: 300 }))
 
     fireEvent.click(getByRole("button", { name: "start" }))
 
@@ -80,7 +80,7 @@ describe("App", () => {
   })
 
   it("should show 0 when timer has finished", () => {
-    const { getByText, getByRole } = render(createApp({ timeLeft: 300, interval: 1 }))
+    const { getByText, getByRole } = render(Timer({ timeLeft: 300 }))
 
     fireEvent.click(getByRole("button", { name: "start" }))
 
@@ -91,7 +91,7 @@ describe("App", () => {
 
   it("calls onEnd handler when the timer ends", () => {
     const onEnd = jest.fn()
-    const { getByRole } = render(createApp({ timeLeft: 300, interval: 1, onEnd }))
+    const { getByRole } = render(Timer({ timeLeft: 300, onEnd }))
 
     fireEvent.click(getByRole("button", { name: "start" }))
 
@@ -100,10 +100,9 @@ describe("App", () => {
     expect(onEnd).toHaveBeenCalled()
   })
 
-  it('should start the timer automatically, when "startTimerOnRender" prop is passed', () => {
-    const { getByText } = render(
-      createApp({ timeLeft: 300, interval: 1, startTimerOnRender: true })
-    )
+  // I might want to implement this later on, so I'm leaving this test here
+  it.skip('should start the timer automatically, when "startTimerOnRender" prop is passed', () => {
+    const { getByText } = render(Timer({ timeLeft: 300 }))
 
     jest.runAllTimers()
 

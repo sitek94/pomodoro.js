@@ -1,4 +1,4 @@
-import { Message } from "components/message"
+import { Message } from "./components/message"
 import { Timer } from "./components/timer"
 
 const WORK = "WORK"
