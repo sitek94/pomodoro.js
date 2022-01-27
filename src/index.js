@@ -1,20 +1,64 @@
-import { createApp } from "./app"
 import { createMessageView } from "./views/message-view"
+import { createTimerView } from "./views/timer-view"
 
-const props = {
-  timeLeft: 5 * 60,
-  interval: 1,
-  startTimerOnRender: true,
+const WORK = "WORK"
+const AFTER_WORK = "AFTER_WORK"
+const BREAK = "BREAK"
+const AFTER_BREAK = "AFTER_BREAK"
+const TIMER = "TIMER"
+const MESSAGE = "MESSAGE"
+
+const INITIAL_STATE = WORK
+
+let state = INITIAL_STATE
+function setState(newState) {
+  state = newState
+  render(state)
 }
-const app = createApp(props)
+const next = state => () => setState(state)
 
-const root = document.querySelector("#root")
-root.appendChild(app)
+function getProps(state) {
+  switch (state) {
+    case WORK:
+      return {
+        type: TIMER,
+        timeLeft: 25 * 60,
+        onStart: next(AFTER_WORK),
+      }
 
-const { view: messageView } = createMessageView({
-  message: "Hello World",
-  buttonText: "continue",
-  onClick: () => alert("clicked"),
-})
+    case AFTER_WORK:
+      return {
+        type: MESSAGE,
+        message: "Easy now!",
+        buttonText: "Let's chill a bit",
+        onClick: next(BREAK),
+      }
 
-root.appendChild(messageView)
+    case BREAK:
+      return {
+        type: TIMER,
+        timeLeft: 5 * 60,
+        onStart: next(AFTER_BREAK),
+      }
+
+    case AFTER_BREAK:
+      return {
+        type: MESSAGE,
+        message: "Ready to work?",
+        buttonText: "Let's go",
+        onClick: next(WORK),
+      }
+  }
+}
+
+function render(state) {
+  const props = getProps(state)
+  const createView = props.type === TIMER ? createTimerView : createMessageView
+  const view = createView(props)
+
+  const root = document.querySelector("#root")
+  root.innerHTML = ""
+  root.appendChild(view)
+}
+
+render(state)
