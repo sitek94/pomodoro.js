@@ -1,5 +1,5 @@
-import { createMessageView } from "./views/message-view"
-import { createTimerView } from "./views/timer-view"
+import { Message } from "components/message"
+import { Timer } from "./components/timer"
 
 const WORK = "WORK"
 const AFTER_WORK = "AFTER_WORK"
@@ -53,8 +53,8 @@ function getProps(state) {
 
 function render(state) {
   const props = getProps(state)
-  const createView = props.type === TIMER ? createTimerView : createMessageView
-  const view = createView(props)
+  const Component = props.type === TIMER ? Timer : Message
+  const view = Component(props)
 
   const root = document.querySelector("#root")
   root.innerHTML = ""

@@ -1,12 +1,12 @@
 import { render, userEvent } from "test-utils"
-import { createTimerView } from "views/timer-view"
+import { TimerView } from "./timer-view"
 
-const createTimerViewMock = props => {
+const TimerViewMock = props => {
   const onStart = jest.fn()
   const onStop = jest.fn()
   const onReset = jest.fn()
 
-  const mock = createTimerView({
+  const view = TimerView({
     onStart,
     onStop,
     onReset,
@@ -14,7 +14,7 @@ const createTimerViewMock = props => {
   })
 
   return {
-    ...mock,
+    view,
     onStart,
     onStop,
     onReset,
@@ -23,7 +23,7 @@ const createTimerViewMock = props => {
 
 describe("Timer View", () => {
   it(`renders initial view with "time left" set to 300`, () => {
-    const { view } = createTimerViewMock({
+    const { view } = TimerViewMock({
       timeLeft: 300,
     })
     const { getByText } = render(view)
@@ -34,7 +34,7 @@ describe("Timer View", () => {
   })
 
   it("calls onStart, onStop and onReset", () => {
-    const { view, onStart, onStop, onReset } = createTimerViewMock({
+    const { view, onStart, onStop, onReset } = TimerViewMock({
       timeLeft: 300,
     })
     const { getByText } = render(view)
@@ -52,16 +52,16 @@ describe("Timer View", () => {
     expect(onReset).toHaveBeenCalled()
   })
 
-  it(`updates "timeLeft" using "updateTimeLeft" method`, () => {
-    const { view, updateTimeLeft } = createTimerViewMock({
+  it(`updates "timeLeft" using "view.setTimerText" method`, () => {
+    const { view } = TimerViewMock({
       timeLeft: 300,
     })
     const { getByText } = render(view)
 
-    updateTimeLeft(100)
+    view.setTimerText(100)
     expect(getByText("100")).toBeInTheDocument()
 
-    updateTimeLeft(200)
+    view.setTimerText(200)
     expect(getByText("200")).toBeInTheDocument()
   })
 })

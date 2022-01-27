@@ -1,35 +1,18 @@
-import { createMessageView } from "./message-view"
+import { Message } from "./message"
 import { render, userEvent } from "test-utils"
-
-const createMessageViewMock = props => {
-  const onClick = jest.fn()
-
-  const mock = createMessageView({
-    onClick,
-    ...props,
-  })
-
-  return {
-    ...mock,
-    onClick,
-  }
-}
 
 describe("Message View", () => {
   it(`renders initial view with "Hello, world!" message`, () => {
     const message = "Hello, world!"
-    const { view } = createMessageViewMock({
-      message,
-    })
-    const { getByText } = render(view)
+    const { getByText } = render(Message({ message }))
 
     expect(getByText(message)).toBeInTheDocument()
   })
 
   it(`renders button and handles click event`, () => {
+    const onClick = jest.fn()
     const buttonText = "click me"
-    const { view, onClick } = createMessageViewMock({ buttonText })
-    const { getByText, getByRole } = render(view)
+    const { getByText, getByRole } = render(Message({ buttonText, onClick }))
 
     expect(getByText(buttonText)).toBeInTheDocument()
 

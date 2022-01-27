@@ -1,4 +1,4 @@
-export function createMessageView({ message, buttonText, onClick }) {
+export function Message({ message, buttonText, onClick }) {
   const view = document.createElement("div")
   view.id = "message-view"
   view.innerHTML = `

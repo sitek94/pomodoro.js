@@ -1,4 +1,4 @@
-export function createTimerView({ timeLeft, onStart, onStop, onReset }) {
+export function TimerView({ timeLeft, onStart, onStop, onReset }) {
   const view = document.createElement("div")
   view.id = "timer-view"
   view.innerHTML = `
@@ -7,10 +7,10 @@ export function createTimerView({ timeLeft, onStart, onStop, onReset }) {
     <button id="stop-btn">stop</button>
     <button id="reset-btn">reset</button>
   `
-  // const timer = view.querySelector("#time-left")
-  // function updateTimeLeft(text) {
-  //   timer.textContent = text
-  // }
+  const timer = view.querySelector("#time-left")
+  function setTimerText(text) {
+    timer.textContent = text
+  }
 
   const buttons = [
     ["#start-btn", onStart],
@@ -22,5 +22,7 @@ export function createTimerView({ timeLeft, onStart, onStop, onReset }) {
     button.addEventListener("click", handler)
   }
 
-  return view
+  return Object.assign(view, {
+    setTimerText,
+  })
 }
