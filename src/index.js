@@ -15,7 +15,6 @@ function setState(newState) {
   state = newState
   render(state)
 }
-const next = state => () => setState(state)
 
 function getProps(state) {
   switch (state) {
@@ -23,7 +22,7 @@ function getProps(state) {
       return {
         type: TIMER,
         timeLeft: 25 * 60,
-        onStart: next(AFTER_WORK),
+        onEnd: () => setState(AFTER_WORK),
       }
 
     case AFTER_WORK:
@@ -31,14 +30,14 @@ function getProps(state) {
         type: MESSAGE,
         message: "Easy now!",
         buttonText: "Let's chill a bit",
-        onClick: next(BREAK),
+        onClick: () => setState(BREAK),
       }
 
     case BREAK:
       return {
         type: TIMER,
         timeLeft: 5 * 60,
-        onStart: next(AFTER_BREAK),
+        onEnd: () => setState(AFTER_BREAK),
       }
 
     case AFTER_BREAK:
@@ -46,7 +45,7 @@ function getProps(state) {
         type: MESSAGE,
         message: "Ready to work?",
         buttonText: "Let's go",
-        onClick: next(WORK),
+        onClick: () => setState(WORK),
       }
   }
 }
