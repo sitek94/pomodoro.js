@@ -1,5 +1,6 @@
 import { Message } from "./components/message"
 import { Timer } from "./components/timer"
+import gongMP3 from "./assets/gong-1.mp3"
 
 const WORK = "WORK"
 const AFTER_WORK = "AFTER_WORK"
@@ -22,7 +23,10 @@ function getProps(state) {
       return {
         type: TIMER,
         timeLeft: 25 * 60,
-        onEnd: () => setState(AFTER_WORK),
+        onEnd: () => {
+          playSound()
+          setState(AFTER_WORK)
+        },
       }
 
     case AFTER_WORK:
@@ -37,7 +41,10 @@ function getProps(state) {
       return {
         type: TIMER,
         timeLeft: 5 * 60,
-        onEnd: () => setState(AFTER_BREAK),
+        onEnd: () => {
+          playSound()
+          setState(AFTER_BREAK)
+        },
       }
 
     case AFTER_BREAK:
@@ -50,14 +57,11 @@ function getProps(state) {
   }
 }
 
-function render(state) {
-  const props = getProps(state)
-  const Component = props.type === TIMER ? Timer : Message
-  const view = Component(props)
-
-  const root = document.querySelector("#root")
-  root.innerHTML = ""
-  root.appendChild(view)
+const audio = new Audio(gongMP3)
+function playSound() {
+  if (!audio.paused) {
+    audio.pause()
+    audio.currentTime = 0
+  }
+  audio.play()
 }
-
-render(state)
