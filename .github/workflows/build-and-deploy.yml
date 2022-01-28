@@ -25,6 +25,9 @@ jobs:
       - name: 📥 Install Dependencies
         uses: bahmutov/npm-install@v1
 
+      - name: 🃏 Run Jest
+        run: npm run test
+
       - name: 🛠️ Build project
         run: npm run build
 
