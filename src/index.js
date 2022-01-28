@@ -17,6 +17,18 @@ function setState(newState) {
   render(state)
 }
 
+render(state)
+
+function render(state) {
+  const props = getProps(state)
+  const Component = props.type === TIMER ? Timer : Message
+  const view = Component(props)
+
+  const root = document.querySelector("#root")
+  root.innerHTML = ""
+  root.appendChild(view)
+}
+
 function getProps(state) {
   switch (state) {
     case WORK:
