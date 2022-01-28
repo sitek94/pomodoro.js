@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build --base=/pomodoro.js/",
     "preview": "vite preview --port=8080",
     "test": "jest --watch"
